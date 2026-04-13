@@ -1,0 +1,50 @@
+{% render 'phone-case',
+  case_product: block.settings.case_product,
+  tag_product: block.settings.tag_product,
+  label: block.settings.label,
+  tag_label: block.settings.tag_label,
+  none_label: block.settings.none_label,
+  uid: block.id,
+  current_section_id: section.id
+%}
+
+{% schema %}
+{
+  "name": "Phone case",
+  "settings": [
+    {
+      "type": "product",
+      "id": "case_product",
+      "label": "Case product"
+    },
+    {
+      "type": "product",
+      "id": "tag_product",
+      "label": "Tag product"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Phone case"
+    },
+    {
+      "type": "text",
+      "id": "tag_label",
+      "label": "Tag option label",
+      "default": "Use with existing case"
+    },
+    {
+      "type": "text",
+      "id": "none_label",
+      "label": "None option label",
+      "default": "Chain only"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Phone case"
+    }
+  ]
+}
+{% endschema %}

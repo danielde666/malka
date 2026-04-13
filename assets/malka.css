@@ -1,0 +1,547 @@
+*:focus-visible {
+    outline: none !important;
+    outline-offset: 0 !important;
+}
+/* SuisseIntl Book (Light / 300) */
+@font-face {
+  font-family: 'SuisseIntl';
+  src: url('https://cdn.shopify.com/s/files/1/0773/9778/6873/files/SuisseIntl-Book.woff2?v=1762374153')
+       format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* SuisseIntl Regular (Normal / 400) */
+@font-face {
+  font-family: 'SuisseIntl';
+  src: url('https://cdn.shopify.com/s/files/1/0773/9778/6873/files/SuisseIntl-Regular.woff2?v=1762374153')
+       format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* SuisseIntl Medium (Medium / 500) */
+@font-face {
+  font-family: 'SuisseIntl';
+  src: url('https://cdn.shopify.com/s/files/1/0773/9778/6873/files/SuisseIntl-Medium.woff2?v=1762374153')
+       format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* SuisseIntl Semibold (Semibold / 600) */
+@font-face {
+  font-family: 'SuisseIntl';
+  src: url('https://cdn.shopify.com/s/files/1/0773/9778/6873/files/SuisseIntl-Semibold.woff2?v=1762374153')
+       format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* HistoricalFellType Roman */
+@font-face {
+  font-family: 'HistoricalFellType Roman';
+  src: url('https://cdn.shopify.com/s/files/1/0773/9778/6873/files/Historical-FellTypeRoman.otf?v=1762374165')
+       format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* HistoricalFellType Italic */
+@font-face {
+  font-family: 'HistoricalFellType Italic';
+  src: url('https://cdn.shopify.com/s/files/1/0773/9778/6873/files/Historical-FellTypeItalic.otf?v=1762374165')
+       format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* JandaAsLongAsYouLoveMe  */
+@font-face {
+  font-family: 'JandaAsLongAsYouLoveMe';
+  src: url('https://cdn.shopify.com/s/files/1/0773/9778/6873/files/JandaAsLongAsYouLoveMe.ttf?v=1762374159')
+       format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
+
+
+
+
+/* Reusable utility */
+.beaded-edge {
+  --bead: 14px;          /* bead diameter */
+  --pitch: 18px;         /* bead-to-bead spacing */
+  --color: #6b4a2f;       /* bead color */
+  --offset: calc(var(--bead) * -0.5); /* pushes beads out */
+  position: relative;
+}
+
+/* RIGHT edge */
+.beaded-edge[data-edge="right"]::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: var(--offset);
+  width: var(--bead);
+  pointer-events: none;
+
+  /* one bead per “tile”, repeated vertically */
+  background:
+    radial-gradient(circle at 50% calc(var(--bead) / 2),
+      var(--color) 0 48%,
+      transparent 52% 100%);
+  background-size: 100% var(--pitch);
+  background-repeat: repeat-y;
+
+  /* optional: soften like “ornamental ink” */
+  filter: drop-shadow(0 1px 0 rgba(0,0,0,0.12));
+}
+
+/* LEFT edge */
+.beaded-edge[data-edge="left"]::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--offset);
+  width: var(--bead);
+  pointer-events: none;
+
+  background:
+    radial-gradient(circle at 50% calc(var(--bead) / 2),
+      var(--color) 0 48%,
+      transparent 52% 100%);
+  background-size: 100% var(--pitch);
+  background-repeat: repeat-y;
+}
+
+/* TOP edge */
+.beaded-edge[data-edge="top"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--offset);
+  height: var(--bead);
+  pointer-events: none;
+
+  background:
+    radial-gradient(circle at calc(var(--bead) / 2) 50%,
+      var(--color) 0 48%,
+      transparent 52% 100%);
+  background-size: var(--pitch) 100%;
+  background-repeat: repeat-x;
+}
+
+/* BOTTOM edge */
+.beaded-edge[data-edge="bottom"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--offset);
+  height: var(--bead);
+  pointer-events: none;
+
+  background:
+    radial-gradient(circle at calc(var(--bead) / 2) 50%,
+      var(--color) 0 48%,
+      transparent 52% 100%);
+  background-size: var(--pitch) 100%;
+  background-repeat: repeat-x;
+
+
+
+
+/* swap the radial-gradient line with: */
+/* background:
+  radial-gradient(circle at 50% calc(var(--bead) / 2),
+    transparent 0 34%,
+    var(--color) 36% 50%,
+    transparent 52% 100%); */
+
+/* Alternate bead sizes (subtle “handmade” rhythm) by layering two patterns: */
+     background:
+  radial-gradient(circle at 50% calc(var(--bead) / 2),
+    var(--color) 0 48%, transparent 52% 100%),
+  radial-gradient(circle at 50% calc(var(--bead) / 2),
+    var(--color) 0 36%, transparent 40% 100%);
+background-size: 100% var(--pitch), 100% calc(var(--pitch) * 2);
+background-position: 0 0, 0 calc(var(--pitch) / 2);
+background-repeat: repeat-y;
+opacity: 0.95; 
+
+
+}
+
+
+
+
+.beaded-frame {
+  --frame: 18;     /* border thickness in px */
+  --c: #6b4a2f;
+
+  border: calc(var(--frame) * 1px) solid transparent;
+
+  /* SVG tile is a single bead cell, repeated */
+  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='6.5' fill='none' stroke='%236b4a2f' stroke-width='2'/%3E%3Ccircle cx='12' cy='12' r='1.25' fill='%236b4a2f'/%3E%3C/svg%3E") 12 round;
+}
+
+
+.arch-border {
+  --arch-width: 32px;
+  --arch-height: 16px;
+  --stroke: 2px;
+  --color: #6b2a24;
+  --bg: #fbf4f6;
+
+  position: relative;
+  background-color: var(--bg);
+}
+
+.arch-border::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--arch-height);
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at center top,
+      transparent calc(50% - var(--stroke)),
+      var(--color) 50%,
+      var(--color) calc(50% + var(--stroke)),
+      transparent calc(50% + var(--stroke) + 1px)
+    );
+  background-size: var(--arch-width) var(--arch-height);
+  background-repeat: repeat-x;
+}
+
+
+
+.scallop-edge {
+  --size: 26px;
+  --color: #6b2a24;
+
+  position: relative;
+}
+
+.scallop-edge::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--size) * -0.5);
+  height: var(--size);
+  background:
+    radial-gradient(
+      circle,
+      var(--color) 70%,
+      transparent 72%
+    );
+  background-size: var(--size) var(--size);
+  background-repeat: repeat-x;
+}
+
+
+
+
+.wave-border {
+  --wave-width: 40px;
+  --wave-height: 16px;
+  --stroke: 2px;
+  --color: #2f6da1;
+
+  position: relative;
+}
+
+.wave-border::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--wave-height);
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 25%,
+      var(--color) 25%,
+      var(--color) 30%,
+      transparent 30%,
+      transparent 50%
+    );
+  mask:
+    radial-gradient(
+      circle at 50% 100%,
+      #000 55%,
+      transparent 57%
+    );
+  mask-size: var(--wave-width) var(--wave-height);
+  mask-repeat: repeat-x;
+}
+
+
+.double-wave {
+  --w: 44px;
+  --h: 18px;
+  --stroke: 2px;
+  --c: #2f6da1;
+
+  position: relative;
+}
+.double-wave::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  /* FIX: add “headroom” so the top of the waves can’t clip */
+  height: calc(var(--h) + var(--stroke) + 2px);
+  padding-top: calc(var(--stroke) + 2px);
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(circle at 50% 100%,
+      transparent 60%,
+      var(--c) 62%,
+      var(--c) 66%,
+      transparent 68%
+    ),
+    radial-gradient(circle at 50% 100%,
+      transparent 72%,
+      var(--c) 74%,
+      var(--c) 78%,
+      transparent 80%
+    );
+
+  background-size: var(--w) var(--h);
+  background-repeat: repeat-x;
+
+  /* FIX: anchor pattern to the bottom, not nudged down */
+  background-position: 0 100%;
+  overflow: visible;
+  pointer-events: none;
+
+  filter: drop-shadow(0 0.5px 0 rgba(0,0,0,0.15));
+opacity: 0.95;
+
+}
+
+
+.wave-svg {
+
+    border-image: url(https://markofmalka.com/cdn/shop/t/1/assets/waves.svg) 35 0 / 10px / 0px space;
+    border-width: 1px;
+    border-style: solid;
+}
+
+
+
+
+
+
+
+body * {
+  font-family: 'SuisseIntl', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+}
+
+body h1, 
+body h2, 
+body h3,
+body .h1,
+body .h2,
+body .h3 {
+  font-family: 'HistoricalFellType Roman', serif !important;
+}
+
+body blockquote {
+  font-family: 'JandaAsLongAsYouLoveMe', cursive !important;
+}
+
+body h2,
+body  .h2.h2,
+body  .text-block.h2 > *,
+body h3, 
+body .h3, 
+body h3.h3, 
+body .text-block.h3>*{
+
+  font-family: 'HistoricalFellType Roman', serif !important;
+}
+
+
+body h4, 
+body .h4, 
+body .h4.h4, 
+body .text-block.h4>*{
+
+  font-family: 'JandaAsLongAsYouLoveMe', cursive !important;
+}
+
+
+
+.menu-drawer__menu-item-text,
+body .mega-menu__link-title, body .menu-list__link-title,
+body .button-secondary,
+body .button, button,
+body .price,
+body .products-count-wrapper *,
+body .facets__label,
+body .facets__filters-wrapper *{
+
+  font-family: 'HistoricalFellType Roman', serif !important;
+
+}
+
+body .menu-drawer__list-item--flat .menu-drawer__menu--childlist .menu-drawer__menu-item-text{
+
+  font-family: 'JandaAsLongAsYouLoveMe', cursive !important;
+}
+
+
+body .menu-drawer__list-item--flat .menu-drawer__menu--childlist .menu-drawer__menu-item--child  .menu-drawer__menu-item-text{
+
+  font-family: 'HistoricalFellType Roman', serif !important;
+}
+
+
+
+body .hero__container *,
+body .rte *,
+body .product-card__content,
+body .text-block >p,
+body .header-actions__cart-icon *,
+body .account-button__icon {
+
+  font-size:16px !important;
+  font-family: 'JandaAsLongAsYouLoveMe', cursive !important;
+}
+
+
+
+body .rte p,
+body .shopify-policy__body *{
+
+  font-family: 'HistoricalFellType Roman', serif !important;
+}
+
+body .account-button__icon::before{
+  content:"iv.";
+  
+  font-family: 'JandaAsLongAsYouLoveMe', cursive !important;
+  padding-right:5px;
+  
+}
+body .account-drawer,
+body .account-popover {
+  display:none ;
+}
+body .account-button{
+  width: 120px !important;
+}
+
+body .header-actions__cart-icon *{
+  
+  width: auto !important;
+}
+
+
+body .header-actions__cart-icon>span::before{
+  content:"iv.";
+  
+  font-family: 'JandaAsLongAsYouLoveMe', cursive !important;
+  padding-right:5px;
+
+
+}
+
+body .menu-list__link-title,
+body .header-actions__cart-icon *,
+body .account-button__icon {
+
+  font-size:16px !important;
+  
+  font-family: 'JandaAsLongAsYouLoveMe', cursive !important;
+}
+
+body  .header-actions__cart-icon .cart-bubble {
+    width: 6px !important;
+    top: 30px;
+    right: 0;
+    height: 6px !important;
+}
+
+
+
+
+
+.menu-drawer__menu-item-text{
+    font-family: 'JandaAsLongAsYouLoveMe', cursive !important;
+
+}
+
+
+
+body .header-actions__cart-icon{
+  margin-right:5px;
+}
+
+
+
+.menu-drawer__menu-item-text {
+    overflow: visible !important;
+}
+
+.popup-link__content--drawer:modal {
+max-width:90%;
+width:800px;
+}
+
+
+select {
+background-color: transparent;
+color: currentcolor;
+-webkit-appearance: none;
+}
+
+.contact-form__input {
+    font-family: HistoricalFellType Roman, serif !important;
+    border: none !important;
+    font-size: 16px;
+    padding: 11px!important;
+    border-bottom: 1px solid #f0e9df !important;
+    background: rgba(255, 255, 255, .666) !important;
+}
+.email-signup__input-group .email-signup__input--underline {
+    font-size: 16px !important;
+    border: none;
+    border-bottom: 1px solid #f0e9df !important;
+    background: rgba(255, 255, 255, .666) !important;
+    padding-left: 11px !important;
+}
+
+
+
+@media screen and (max-width: 990px) {
+
+}

@@ -1,0 +1,111 @@
+{% # theme-check-disable %}
+{%- unless settings.type_body_font.system? -%}
+  <link
+    rel="preload"
+    as="font"
+    href="{{ settings.type_body_font | font_url }}"
+    type="font/woff2"
+    crossorigin
+    fetchpriority="low"
+  >
+{%- endunless -%}
+{%- unless settings.type_subheading_font.system? -%}
+  <link
+    rel="preload"
+    as="font"
+    href="{{ settings.type_subheading_font | font_url }}"
+    type="font/woff2"
+    crossorigin
+    fetchpriority="low"
+  >
+{%- endunless -%}
+{%- unless settings.type_heading_font.system? -%}
+  <link
+    rel="preload"
+    as="font"
+    href="{{ settings.type_heading_font | font_url }}"
+    type="font/woff2"
+    crossorigin
+    fetchpriority="low"
+  >
+{%- endunless -%}
+{%- unless settings.type_accent_font.system? -%}
+  <link
+    rel="preload"
+    as="font"
+    href="{{ settings.type_accent_font | font_url }}"
+    type="font/woff2"
+    crossorigin
+    fetchpriority="low"
+  >
+{%- endunless -%}
+
+
+
+
+<link
+  rel="preload"
+  as="font"
+  href="https://cdn.shopify.com/s/files/1/0773/9778/6873/files/JandaAsLongAsYouLoveMe.ttf?v=1762374159"
+  type="font/ttf"
+  crossorigin="anonymous"
+  fetchpriority="low"
+/>
+
+<link
+  rel="preload"
+  as="font"
+  href="https://cdn.shopify.com/s/files/1/0773/9778/6873/files/Historical-FellTypeItalic.otf?v=1762374165"
+  type="font/otf"
+  crossorigin="anonymous"
+  fetchpriority="low"
+/>
+
+    <link
+    rel="preload"
+    as="font"
+    href="https://cdn.shopify.com/s/files/1/0773/9778/6873/files/Historical-FellTypeRoman.otf?v=1762374165"
+    type="font/oft"
+  crossorigin="anonymous"
+    fetchpriority="low"
+  >
+  <link
+    rel="preload"
+    as="font"
+    href="https://cdn.shopify.com/s/files/1/0773/9778/6873/files/SuisseIntl-Book.woff2?v=1762374153"
+    type="font/woff2"
+  crossorigin="anonymous"
+    fetchpriority="low"
+  >
+ 
+  <link
+    rel="preload"
+    as="font"
+    href="https://cdn.shopify.com/s/files/1/0773/9778/6873/files/SuisseIntl-Regular.woff2?v=1762374153"
+    type="font/woff2"
+  crossorigin="anonymous"
+    fetchpriority="low"
+  >
+ 
+  <link
+    rel="preload"
+    as="font"
+    href="https://cdn.shopify.com/s/files/1/0773/9778/6873/files/SuisseIntl-Medium.woff2?v=1762374153"
+    type="font/woff2"
+  crossorigin="anonymous"
+    fetchpriority="low"
+  >
+ 
+  <link
+    rel="preload"
+    as="font"
+    href="https://cdn.shopify.com/s/files/1/0773/9778/6873/files/SuisseIntl-Semibold.woff2?v=1762374153"
+    type="font/woff2"
+  crossorigin="anonymous"
+    fetchpriority="low"
+  >
+
+
+
+    
+{% # theme-check-enable %}

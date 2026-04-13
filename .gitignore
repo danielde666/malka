@@ -1,0 +1,51 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+.TemporaryItems
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.DocumentRevisions-V100
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+*.icloud
+
+# Thumbnails / Finder
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Shopify Theme Kit (legacy; contains store credentials — never commit)
+config.yml
+
+# Shopify CLI / local tooling
+.shopify/
+.env
+.env.*
+!.env.example
+
+# Node (if you add build tools or Theme Check locally)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs and caches
+*.log
+.sass-cache/
+.cache/

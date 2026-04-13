@@ -1,0 +1,238 @@
+{% liquid
+  assign uid = 'phone-case-' | append: uid
+  assign has_tag_label = false
+  assign has_none_label = false
+
+  if tag_label != blank
+    assign has_tag_label = true
+  endif
+
+  if none_label != blank
+    assign has_none_label = true
+  endif
+%}
+
+<div
+  id="{{ uid }}"
+  class="phone-case"
+  data-section-id="{{ current_section_id }}"
+>
+  <label for="PhoneCaseSelect-{{ uid }}">
+    {{ label }}
+  </label>
+
+  <select id="PhoneCaseSelect-{{ uid }}" name="phone_case_selection">
+    <option value="">Select option</option>
+
+    {% if tag_product and has_tag_label %}
+      {% assign tag_variant = tag_product.selected_or_first_available_variant %}
+      {% if tag_variant %}
+        <option value="{{ tag_variant.id }}" data-type="tag">
+          {{ tag_label }}
+        </option>
+      {% endif %}
+    {% endif %}
+
+    {% if has_none_label %}
+      <option value="none" data-type="none">
+        {{ none_label }}
+      </option>
+    {% endif %}
+
+    {% if case_product %}
+      {% for variant in case_product.variants %}
+        {% if variant.available %}
+          <option value="{{ variant.id }}" data-type="case">
+            {{ variant.title }}
+          </option>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  </select>
+</div>
+
+<script>
+(() => {
+  const root = document.getElementById('{{ uid }}');
+  if (!root || root.dataset.init === 'true') return;
+  root.dataset.init = 'true';
+
+  const select = root.querySelector('select');
+  const sectionId = root.dataset.sectionId;
+
+  const tagVariantId = {% if tag_product and tag_product.selected_or_first_available_variant %}{{ tag_product.selected_or_first_available_variant.id | json }}{% else %}null{% endif %};
+  const hasTagLabel = {{ has_tag_label | json }};
+  const hasNoneLabel = {{ has_none_label | json }};
+
+  function updateButtonState(addButton) {
+    if (!addButton) return;
+    const isValid = select.value !== '';
+    addButton.disabled = !isValid;
+    addButton.classList.toggle('is-disabled', !isValid);
+  }
+
+  function init() {
+    const form =
+      document.getElementById(`BuyButtons-ProductForm-${sectionId}`) ||
+      document.querySelector('form[data-type="add-to-cart-form"]') ||
+      document.querySelector('form[action*="/cart/add"]');
+
+    if (!form) return false;
+
+    const addButton =
+      form.querySelector('button[name="add"]') ||
+      form.querySelector('button[type="submit"]');
+
+    if (!addButton) return false;
+    if (addButton.dataset.phoneCaseBound === 'true') {
+      updateButtonState(addButton);
+      return true;
+    }
+
+    addButton.dataset.phoneCaseBound = 'true';
+
+    updateButtonState(addButton);
+    select.addEventListener('change', () => updateButtonState(addButton));
+
+    addButton.addEventListener('click', async (e) => {
+      const selected = select.value;
+
+      if (!selected) {
+        e.preventDefault();
+        return;
+      }
+
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+
+      const selectedOption = select.options[select.selectedIndex];
+      const type = selectedOption ? selectedOption.dataset.type : null;
+
+      const formData = new FormData(form);
+      const mainId = formData.get('id');
+      const qty = parseInt(formData.get('quantity') || '1', 10);
+
+      if (!mainId) return;
+
+      const bundleId = `phone-case-${Date.now()}-${Math.floor(Math.random() * 100000)}`;
+
+      const items = [
+        {
+          id: Number(mainId),
+          quantity: qty,
+          properties: {
+            _phone_case_parent: 'true',
+            _phone_case_bundle_id: bundleId
+          }
+        }
+      ];
+
+      // Always include phone tag if defined
+      if (tagVariantId) {
+        items.push({
+          id: Number(tagVariantId),
+          quantity: qty,
+          properties: {
+            _phone_case_child: 'true',
+            _phone_case_bundle_id: bundleId,
+            _phone_case_type: 'tag'
+          }
+        });
+      }
+
+      // Only add selected case when a case is chosen
+      if (type === 'case') {
+        items.push({
+          id: Number(selected),
+          quantity: qty,
+          properties: {
+            _phone_case_child: 'true',
+            _phone_case_bundle_id: bundleId,
+            _phone_case_type: 'case'
+          }
+        });
+      }
+
+      // If no tag label is shown, but the selected option is the visible tag option, do nothing extra
+      // because the tag is already always included above.
+
+      // If none option is shown and selected, only the always-included tag (if any) is added.
+
+      try {
+        addButton.disabled = true;
+        addButton.setAttribute('aria-busy', 'true');
+
+        const addResponse = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({ items })
+        });
+
+        if (!addResponse.ok) {
+          addButton.removeAttribute('aria-busy');
+          updateButtonState(addButton);
+          return;
+        }
+
+        const cartResponse = await fetch('/cart.js', {
+          headers: { 'Accept': 'application/json' }
+        });
+        const cart = await cartResponse.json();
+
+        document.dispatchEvent(new CustomEvent('cart:update', {
+          bubbles: true,
+          detail: {
+            resource: cart,
+            sourceId: '{{ uid }}',
+            data: {
+              source: 'phone-case',
+              itemCount: cart.item_count,
+              variantId: String(mainId)
+            }
+          }
+        }));
+
+        const drawer = document.querySelector('cart-drawer-component');
+
+        if (!drawer) {
+          window.location.assign('/cart');
+          return;
+        }
+
+        if (drawer.hasAttribute('auto-open') && typeof drawer.open === 'function') {
+          drawer.open();
+        }
+
+        addButton.removeAttribute('aria-busy');
+        updateButtonState(addButton);
+      } catch (error) {
+        console.error(error);
+        addButton.removeAttribute('aria-busy');
+        updateButtonState(addButton);
+      }
+    }, true);
+
+    return true;
+  }
+
+  if (init()) return;
+
+  let tries = 0;
+  const maxTries = 40;
+
+  const interval = setInterval(() => {
+    tries += 1;
+    if (init()) {
+      clearInterval(interval);
+      return;
+    }
+    if (tries >= maxTries) {
+      clearInterval(interval);
+    }
+  }, 250);
+})();
+</script>
