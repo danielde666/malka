@@ -46,6 +46,14 @@
     assign slideshow_controls_style = 'counter'
   endif
 
+  assign show_thumbnails_on_mobile = false
+
+  if block_settings.mobile_thumbnails and render_slideshow_controls and slideshow_controls_style == 'thumbnails'
+    assign show_thumbnails_on_mobile = true
+    assign slideshow_controls_class = ''
+    assign render_mobile_slideshow_controls = false
+  endif
+
   assign render_slideshow_arrows = false
 
   if selected_product.media.size <= 1
@@ -283,6 +291,9 @@
     media-gallery--{{ block_settings.media_presentation }}
     {% if block_settings.slideshow_mobile_controls_style == 'hint' %}
       media-gallery--hint
+    {% endif %}
+    {% if show_thumbnails_on_mobile %}
+      media-gallery--mobile-thumbnails
     {% endif %}
     {% if block_settings.extend_media %}
       media-gallery--extend
@@ -649,6 +660,28 @@
         translate(var(--drag-zoom-translate-x, 0), var(--drag-zoom-translate-y, 0));
     }
 
+    /* Thumbnails set to the left or right on desktop sit in a row below the media on mobile */
+    .media-gallery--mobile-thumbnails slideshow-component:has(slideshow-controls[thumbnails][pagination-position]) {
+      display: flex;
+    }
+
+    .media-gallery--mobile-thumbnails slideshow-controls[thumbnails][pagination-position]:not([controls-on-media]) {
+      order: 0;
+      flex-direction: row;
+      width: 100%;
+      height: auto;
+      min-height: 0;
+
+      .slideshow-controls__thumbnails-container {
+        position: static;
+        overflow: scroll hidden;
+      }
+
+      .slideshow-controls__thumbnails {
+        flex-direction: row;
+      }
+    }
+
     .media-gallery--hint {
       --slideshow-gap: var(--gap-2xs);
 
@@ -857,6 +890,14 @@
       "step": 1,
       "unit": "px",
       "default": 64,
+      "visible_if": "{{ block.settings.media_presentation == 'carousel' and block.settings.slideshow_controls_style == 'thumbnails' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_thumbnails",
+      "label": "Show thumbnails on mobile",
+      "info": "Replaces the mobile pagination. Thumbnails set to left or right display below the media on mobile.",
+      "default": false,
       "visible_if": "{{ block.settings.media_presentation == 'carousel' and block.settings.slideshow_controls_style == 'thumbnails' }}"
     },
     {

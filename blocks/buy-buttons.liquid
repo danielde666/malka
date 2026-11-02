@@ -145,6 +145,25 @@
         </div>
       {%- endform -%}
     </product-form-component>
+
+    {%- if block_settings.sticky_mobile or block_settings.sticky_desktop -%}
+      <script
+        src="{{ 'sticky-add-to-cart.js' | asset_url }}"
+        type="module"
+      ></script>
+      <sticky-add-to-cart
+        class="sticky-add-to-cart{% unless block_settings.sticky_mobile %} hidden--mobile{% endunless %}{% unless block_settings.sticky_desktop %} hidden--desktop{% endunless %}"
+        popover="manual"
+        style="--sticky-add-to-cart-offset: {{ block_settings.sticky_offset }}px;"
+      >
+        <button
+          type="button"
+          class="button sticky-add-to-cart__button"
+        >
+          {{ 'products.product.add_to_cart' | t }}
+        </button>
+      </sticky-add-to-cart>
+    {%- endif -%}
   {%- else -%}
     <div class="product-form-buttons">
       <button
@@ -488,6 +507,57 @@
     top: calc(var(--padding-2xl) - (var(--icon-size-xs) / 2));
     right: calc(var(--padding-2xl) - var(--icon-size-xs));
   }
+
+  .sticky-add-to-cart {
+    position: fixed;
+    inset: auto var(--sticky-add-to-cart-offset) calc(var(--sticky-add-to-cart-offset) + env(safe-area-inset-bottom, 0px));
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow: visible;
+    color: inherit;
+    background-color: var(--color-background);
+    border-radius: var(--style-border-radius-buttons-primary);
+    opacity: 0;
+    transform: translateY(calc(100% + var(--sticky-add-to-cart-offset)));
+    pointer-events: none;
+    transition: opacity var(--animation-speed) var(--animation-easing),
+      transform var(--animation-speed) var(--animation-easing);
+  }
+
+  .sticky-add-to-cart:has(.button-secondary) {
+    border-radius: var(--style-border-radius-buttons-secondary);
+  }
+
+  .sticky-add-to-cart[data-visible] {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .sticky-add-to-cart__button {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: var(--height-buy-buttons);
+    padding-inline: var(--padding-4xl);
+    padding-block: var(--padding-lg);
+  }
+
+  @media screen and (min-width: 750px) {
+    .sticky-add-to-cart {
+      inset-inline: auto var(--sticky-add-to-cart-offset);
+      width: min(var(--sidebar-width), calc(100vw - var(--sticky-add-to-cart-offset) * 2));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sticky-add-to-cart {
+      transition: none;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -520,6 +590,37 @@
     {
       "type": "paragraph",
       "content": "t:content.gift_card_form_description"
+    },
+    {
+      "type": "header",
+      "content": "Sticky add to cart"
+    },
+    {
+      "type": "paragraph",
+      "content": "Pins a copy of the add to cart button to the bottom of the screen once the original has been scrolled past."
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_mobile",
+      "label": "Sticky on mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_desktop",
+      "label": "Sticky on desktop",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "sticky_offset",
+      "label": "Distance from screen edge",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 5,
+      "visible_if": "{{ block.settings.sticky_mobile or block.settings.sticky_desktop }}"
     },
     {
       "type": "header",
