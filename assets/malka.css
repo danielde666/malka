@@ -76,9 +76,17 @@
 
 
 
+.kl-teaser-Wke7kq span{
 
+  font-family: 'JandaAsLongAsYouLoveMe' !important;
+  text-transform: lowercase !important;
+  font-weight: 100 !important;
+}
 
+.klaviyo-form-richtext p span, .klaviyo-form-richtext input{
 
+  font-family: 'HistoricalFellType Roman' !important;
+}
 /* Reusable utility */
 .beaded-edge {
   --bead: 14px;          /* bead diameter */

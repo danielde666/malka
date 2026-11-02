@@ -13,11 +13,10 @@
 >
   <button
     on:click="/showDialog"
-    class="button button-unstyled popup-link__button text-left spacing-style {{ block_settings.type_preset }}"
+    class="button popupbutton button-unstyled popup-link__button text-left spacing-style {{ block_settings.type_preset }}"
     style="{% render 'spacing-style', settings: block_settings %}"
   >
     {{- block_settings.heading }}
-    {{- 'icon-external.svg' | inline_asset_content -}}
   </button>
 
   <dialog
@@ -51,6 +50,16 @@
     display: inline-block;
     position: relative;
     top: var(--margin-2xs);
+  }
+
+  .popupbutton{
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 10px 20px;
+  }
+  .popupbutton:hover{
+    background-color: rgb(124 102 17);
+    color:#fff;
   }
 
   .popup-link__content {
