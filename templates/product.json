@@ -426,11 +426,11 @@
         }
       },
       "custom_css": [
-        "select {width: 100%;font-size: 20px;font-family: HistoricalFellType Roman, serif !important;padding: 10px;}",
-        "select {background: #ffffffad;margin-top: 8px;border: 1px solid !important;}",
-        ".popup-link__content {max-width: none;max-height: none;width: 100%;height: 100%;padding: 5rem;}",
-        ".popup-link__inner {max-width: 400px;margin: 0 auto;}",
-        "@media screen and (max-width: 749px) {.media-gallery--carousel{margin-top: 20px !important;}}"
+        "select {width: 100%; font-size: 20px; font-family: HistoricalFellType Roman, serif !important; padding: 10px;}",
+        "select {background: #ffffffad; margin-top: 8px; border: 1px solid !important;}",
+        ".popup-link__content {max-width: none; max-height: none; width: 100%; height: 100%; padding: 5rem;}",
+        ".popup-link__inner {max-width: 400px; margin: 0 auto;}",
+        "@media screen and (max-width: 749px) {.media-gallery--carousel {margin-top: 20px !important; }}"
       ],
       "settings": {
         "content_width": "content-full-width",
@@ -463,7 +463,6 @@
       "block_order": [
         "loox_reviews_loox_dynamic_section_9iUAcX"
       ],
-      "disabled": true,
       "name": "Loox Reviews",
       "settings": {
         "content_direction": "column",
