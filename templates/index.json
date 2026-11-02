@@ -915,7 +915,7 @@
           "settings": {
             "image": "shopify://shop_images/Photo_Mar_10_2026_1_19_39_PM.png",
             "link": "shopify://pages/shop-all",
-            "image_ratio": "square",
+            "image_ratio": "portrait",
             "width": "fill",
             "custom_width": 92,
             "width_mobile": "fill",
