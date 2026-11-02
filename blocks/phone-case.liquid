@@ -18,28 +18,37 @@
 </div>
 
 {% stylesheet %}
-  /* Sits above the sticky add to cart button when both are sticky */
-  .phone-case-block--sticky-mobile,
-  .phone-case-block--sticky-desktop {
-    background-color: var(--color-background);
-  }
-
+  /* Sticky bars span to the screen edge; the offset is padding so the background has no gaps.
+     When the add to cart button is sticky too, this sits directly on top of it and the button's
+     top padding provides the gap between them. */
   @media screen and (max-width: 749px) {
     .phone-case-block--sticky-mobile {
       position: fixed;
-      inset: auto var(--sticky-offset)
-        calc(var(--sticky-add-to-cart-height, 0px) + var(--sticky-offset) + env(safe-area-inset-bottom, 0px));
+      inset: auto 0 0;
+      padding: var(--sticky-offset) var(--sticky-offset) calc(var(--sticky-offset) + env(safe-area-inset-bottom, 0px));
+      background-color: var(--color-background);
       z-index: var(--layer-sticky);
+    }
+
+    body:has(.buy-buttons-block--sticky-mobile) .phone-case-block--sticky-mobile {
+      bottom: var(--sticky-add-to-cart-height);
+      padding-block-end: 0;
     }
   }
 
   @media screen and (min-width: 750px) {
     .phone-case-block--sticky-desktop {
       position: fixed;
-      inset: auto var(--sticky-offset)
-        calc(var(--sticky-add-to-cart-height, 0px) + var(--sticky-offset) + env(safe-area-inset-bottom, 0px)) auto;
-      width: min(var(--sidebar-width), calc(100vw - var(--sticky-offset) * 2));
+      inset: auto 0 0 auto;
+      width: min(calc(var(--sidebar-width) + var(--sticky-offset) * 2), 100vw);
+      padding: var(--sticky-offset) var(--sticky-offset) calc(var(--sticky-offset) + env(safe-area-inset-bottom, 0px));
+      background-color: var(--color-background);
       z-index: var(--layer-sticky);
+    }
+
+    body:has(.buy-buttons-block--sticky-desktop) .phone-case-block--sticky-desktop {
+      bottom: var(--sticky-add-to-cart-height);
+      padding-block-end: 0;
     }
 
     .product-details:has(.phone-case-block--sticky-desktop) {

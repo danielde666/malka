@@ -156,14 +156,14 @@
         {% if block_settings.sticky_mobile %}
           @media screen and (max-width: 749px) {
             :root {
-              --sticky-add-to-cart-height: calc(var(--height-buy-buttons) + {{ block_settings.sticky_offset }}px);
+              --sticky-add-to-cart-height: calc(var(--height-buy-buttons) + {{ block_settings.sticky_offset }}px * 2 + env(safe-area-inset-bottom, 0px));
             }
           }
         {% endif %}
         {% if block_settings.sticky_desktop %}
           @media screen and (min-width: 750px) {
             :root {
-              --sticky-add-to-cart-height: calc(var(--height-buy-buttons) + {{ block_settings.sticky_offset }}px);
+              --sticky-add-to-cart-height: calc(var(--height-buy-buttons) + {{ block_settings.sticky_offset }}px * 2 + env(safe-area-inset-bottom, 0px));
             }
           }
         {% endif %}
@@ -513,20 +513,13 @@
     right: calc(var(--padding-2xl) - var(--icon-size-xs));
   }
 
-  .buy-buttons-block--sticky-mobile .add-to-cart-block,
-  .buy-buttons-block--sticky-desktop .add-to-cart-block {
-    background-color: var(--color-background);
-    border-radius: var(--style-border-radius-buttons-primary);
-  }
-
-  .add-to-cart-block:has(.button-secondary) {
-    border-radius: var(--style-border-radius-buttons-secondary);
-  }
-
+  /* Sticky bars span to the screen edge; the offset is padding so the background has no gaps */
   @media screen and (max-width: 749px) {
     .buy-buttons-block--sticky-mobile .add-to-cart-block {
       position: fixed;
-      inset: auto var(--sticky-offset) calc(var(--sticky-offset) + env(safe-area-inset-bottom, 0px));
+      inset: auto 0 0;
+      padding: var(--sticky-offset) var(--sticky-offset) calc(var(--sticky-offset) + env(safe-area-inset-bottom, 0px));
+      background-color: var(--color-background);
       z-index: var(--layer-sticky);
     }
   }
@@ -534,8 +527,10 @@
   @media screen and (min-width: 750px) {
     .buy-buttons-block--sticky-desktop .add-to-cart-block {
       position: fixed;
-      inset: auto var(--sticky-offset) calc(var(--sticky-offset) + env(safe-area-inset-bottom, 0px)) auto;
-      width: min(var(--sidebar-width), calc(100vw - var(--sticky-offset) * 2));
+      inset: auto 0 0 auto;
+      width: min(calc(var(--sidebar-width) + var(--sticky-offset) * 2), 100vw);
+      padding: var(--sticky-offset) var(--sticky-offset) calc(var(--sticky-offset) + env(safe-area-inset-bottom, 0px));
+      background-color: var(--color-background);
       z-index: var(--layer-sticky);
     }
 
