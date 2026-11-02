@@ -170,7 +170,10 @@
                 "tag_product": "phone-insert",
                 "label": "Please select your phone case size",
                 "tag_label": " Chain only (use with existing case)",
-                "none_label": ""
+                "none_label": "",
+                "sticky_mobile": true,
+                "sticky_desktop": false,
+                "sticky_offset": 5
               },
               "blocks": {}
             },
@@ -441,17 +444,6 @@
         "padding-block-end": 0
       }
     },
-    "custom_liquid_LjhPXe": {
-      "type": "custom-liquid",
-      "name": "t:names.custom_liquid",
-      "settings": {
-        "custom_liquid": "<div class=\"wave-svg\" data-edge=\"bottom\">&nbsp;</div>",
-        "color_scheme": "",
-        "section_width": "full-width",
-        "padding-block-start": 40,
-        "padding-block-end": 0
-      }
-    },
     "1793312416149a2a2c": {
       "type": "_blocks",
       "blocks": {
@@ -472,6 +464,7 @@
       "block_order": [
         "loox_reviews_loox_dynamic_section_9iUAcX"
       ],
+      "disabled": true,
       "name": "Loox Reviews",
       "settings": {
         "content_direction": "column",
@@ -645,7 +638,6 @@
   },
   "order": [
     "main",
-    "custom_liquid_LjhPXe",
     "1793312416149a2a2c",
     "product_recommendations_qggXJq"
   ]
