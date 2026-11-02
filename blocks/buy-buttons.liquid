@@ -523,17 +523,10 @@
     border-radius: var(--style-border-radius-buttons-secondary);
   }
 
-  /* Room for the Klaviyo "10% off" teaser (fixed bottom-left): its left inset + width.
-     Also used by the sticky phone case block. */
-  body:has(.kl-teaser-Wke7kq) {
-    --kl-teaser-clearance: calc(20px + 114px);
-  }
-
   @media screen and (max-width: 749px) {
     .buy-buttons-block--sticky-mobile .add-to-cart-block {
       position: fixed;
-      inset: auto var(--sticky-offset) calc(var(--sticky-offset) + env(safe-area-inset-bottom, 0px))
-        calc(var(--sticky-offset) + var(--kl-teaser-clearance, 0px));
+      inset: auto var(--sticky-offset) calc(var(--sticky-offset) + env(safe-area-inset-bottom, 0px));
       z-index: var(--layer-sticky);
     }
   }
