@@ -1500,7 +1500,7 @@
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
-                    "text": "<h1><a href=\"/pages/birth-of-venus\" title=\"Birth of Venus\">Birth of Venus</a></h1>",
+                    "text": "<h1><a href=\"/pages/garden-of-eden\" title=\"Garden of Eden\">Garden of Eden</a></h1>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -1530,6 +1530,7 @@
             "text_8F7CzQ": {
               "type": "text",
               "name": "t:names.text",
+              "disabled": true,
               "settings": {
                 "text": "<p>Inspired by Botticelli's timeless masterpiece, Birth of Venus celebrates femininity in its purest form: soft, powerful, and enduring.</p><p>Inspired by the sea, the collection captures beauty born from light, movement, and quiet confidence.</p><p>Introducing three new shades of our signature beaded straps: Ivory, Blush and Aura.</p>",
                 "width": "fit-content",
@@ -1572,7 +1573,7 @@
         "custom_mobile_media": false,
         "media_type_1_mobile": "image",
         "media_type_2_mobile": "image",
-        "link": "shopify://pages/birth-of-venus",
+        "link": "shopify://pages/garden-of-eden",
         "open_in_new_tab": false,
         "content_direction": "column",
         "vertical_on_mobile": true,
