@@ -1,12 +1,53 @@
-{% render 'phone-case',
-  case_product: block.settings.case_product,
-  tag_product: block.settings.tag_product,
-  label: block.settings.label,
-  tag_label: block.settings.tag_label,
-  none_label: block.settings.none_label,
-  uid: block.id,
-  current_section_id: section.id
-%}
+<div
+  class="
+    phone-case-block
+    {%- if block.settings.sticky_mobile %} phone-case-block--sticky-mobile{% endif %}
+    {%- if block.settings.sticky_desktop %} phone-case-block--sticky-desktop{% endif %}
+  "
+  style="--sticky-offset: {{ block.settings.sticky_offset }}px;"
+>
+  {% render 'phone-case',
+    case_product: block.settings.case_product,
+    tag_product: block.settings.tag_product,
+    label: block.settings.label,
+    tag_label: block.settings.tag_label,
+    none_label: block.settings.none_label,
+    uid: block.id,
+    current_section_id: section.id
+  %}
+</div>
+
+{% stylesheet %}
+  /* Sits above the sticky add to cart button when both are sticky */
+  .phone-case-block--sticky-mobile,
+  .phone-case-block--sticky-desktop {
+    background-color: var(--color-background);
+  }
+
+  @media screen and (max-width: 749px) {
+    .phone-case-block--sticky-mobile {
+      position: fixed;
+      inset: auto var(--sticky-offset)
+        calc(var(--sticky-add-to-cart-height, 0px) + var(--sticky-offset) + env(safe-area-inset-bottom, 0px))
+        calc(var(--sticky-offset) + var(--kl-teaser-clearance, 0px));
+      z-index: var(--layer-sticky);
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .phone-case-block--sticky-desktop {
+      position: fixed;
+      inset: auto var(--sticky-offset)
+        calc(var(--sticky-add-to-cart-height, 0px) + var(--sticky-offset) + env(safe-area-inset-bottom, 0px)) auto;
+      width: min(var(--sidebar-width), calc(100vw - var(--sticky-offset) * 2));
+      z-index: var(--layer-sticky);
+    }
+
+    .product-details:has(.phone-case-block--sticky-desktop) {
+      z-index: var(--layer-raised);
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
@@ -39,6 +80,37 @@
       "id": "none_label",
       "label": "None option label",
       "default": "Chain only"
+    },
+    {
+      "type": "header",
+      "content": "Sticky"
+    },
+    {
+      "type": "paragraph",
+      "content": "Fixes the phone case selector to the bottom of the screen, above the add to cart button when that is sticky too."
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_mobile",
+      "label": "Sticky on mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_desktop",
+      "label": "Sticky on desktop",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "sticky_offset",
+      "label": "Distance from screen edge",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 5,
+      "visible_if": "{{ block.settings.sticky_mobile or block.settings.sticky_desktop }}"
     }
   ],
   "presets": [

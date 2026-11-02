@@ -38,7 +38,12 @@
 %}
 
 <span
-  class="buy-buttons-block buy-buttons-block--{{ block.id }}"
+  class="
+    buy-buttons-block buy-buttons-block--{{ block.id }}
+    {%- if block_settings.sticky_mobile %} buy-buttons-block--sticky-mobile{% endif %}
+    {%- if block_settings.sticky_desktop %} buy-buttons-block--sticky-desktop{% endif %}
+  "
+  style="--sticky-offset: {{ block_settings.sticky_offset }}px;"
   {{ block.shopify_attributes }}
 >
   {%- if product != blank -%}
@@ -147,22 +152,22 @@
     </product-form-component>
 
     {%- if block_settings.sticky_mobile or block_settings.sticky_desktop -%}
-      <script
-        src="{{ 'sticky-add-to-cart.js' | asset_url }}"
-        type="module"
-      ></script>
-      <sticky-add-to-cart
-        class="sticky-add-to-cart{% unless block_settings.sticky_mobile %} hidden--mobile{% endunless %}{% unless block_settings.sticky_desktop %} hidden--desktop{% endunless %}"
-        popover="manual"
-        style="--sticky-add-to-cart-offset: {{ block_settings.sticky_offset }}px;"
-      >
-        <button
-          type="button"
-          class="button sticky-add-to-cart__button"
-        >
-          {{ 'products.product.add_to_cart' | t }}
-        </button>
-      </sticky-add-to-cart>
+      {% style %}
+        {% if block_settings.sticky_mobile %}
+          @media screen and (max-width: 749px) {
+            :root {
+              --sticky-add-to-cart-height: calc(var(--height-buy-buttons) + {{ block_settings.sticky_offset }}px);
+            }
+          }
+        {% endif %}
+        {% if block_settings.sticky_desktop %}
+          @media screen and (min-width: 750px) {
+            :root {
+              --sticky-add-to-cart-height: calc(var(--height-buy-buttons) + {{ block_settings.sticky_offset }}px);
+            }
+          }
+        {% endif %}
+      {% endstyle %}
     {%- endif -%}
   {%- else -%}
     <div class="product-form-buttons">
@@ -508,54 +513,42 @@
     right: calc(var(--padding-2xl) - var(--icon-size-xs));
   }
 
-  .sticky-add-to-cart {
-    position: fixed;
-    inset: auto var(--sticky-add-to-cart-offset) calc(var(--sticky-add-to-cart-offset) + env(safe-area-inset-bottom, 0px));
-    width: auto;
-    height: auto;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    overflow: visible;
-    color: inherit;
+  .buy-buttons-block--sticky-mobile .add-to-cart-block,
+  .buy-buttons-block--sticky-desktop .add-to-cart-block {
     background-color: var(--color-background);
     border-radius: var(--style-border-radius-buttons-primary);
-    opacity: 0;
-    transform: translateY(calc(100% + var(--sticky-add-to-cart-offset)));
-    pointer-events: none;
-    transition: opacity var(--animation-speed) var(--animation-easing),
-      transform var(--animation-speed) var(--animation-easing);
   }
 
-  .sticky-add-to-cart:has(.button-secondary) {
+  .add-to-cart-block:has(.button-secondary) {
     border-radius: var(--style-border-radius-buttons-secondary);
   }
 
-  .sticky-add-to-cart[data-visible] {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
+  /* Room for the Klaviyo "10% off" teaser (fixed bottom-left): its left inset + width.
+     Also used by the sticky phone case block. */
+  body:has(.kl-teaser-Wke7kq) {
+    --kl-teaser-clearance: calc(20px + 114px);
   }
 
-  .sticky-add-to-cart__button {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    height: var(--height-buy-buttons);
-    padding-inline: var(--padding-4xl);
-    padding-block: var(--padding-lg);
-  }
-
-  @media screen and (min-width: 750px) {
-    .sticky-add-to-cart {
-      inset-inline: auto var(--sticky-add-to-cart-offset);
-      width: min(var(--sidebar-width), calc(100vw - var(--sticky-add-to-cart-offset) * 2));
+  @media screen and (max-width: 749px) {
+    .buy-buttons-block--sticky-mobile .add-to-cart-block {
+      position: fixed;
+      inset: auto var(--sticky-offset) calc(var(--sticky-offset) + env(safe-area-inset-bottom, 0px))
+        calc(var(--sticky-offset) + var(--kl-teaser-clearance, 0px));
+      z-index: var(--layer-sticky);
     }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .sticky-add-to-cart {
-      transition: none;
+  @media screen and (min-width: 750px) {
+    .buy-buttons-block--sticky-desktop .add-to-cart-block {
+      position: fixed;
+      inset: auto var(--sticky-offset) calc(var(--sticky-offset) + env(safe-area-inset-bottom, 0px)) auto;
+      width: min(var(--sidebar-width), calc(100vw - var(--sticky-offset) * 2));
+      z-index: var(--layer-sticky);
+    }
+
+    /* The sticky details column is its own stacking layer; lift it so later sections can't cover the button */
+    .product-details:has(.buy-buttons-block--sticky-desktop) {
+      z-index: var(--layer-raised);
     }
   }
 {% endstylesheet %}
@@ -597,7 +590,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Pins a copy of the add to cart button to the bottom of the screen once the original has been scrolled past."
+      "content": "Fixes the add to cart button to the bottom of the screen."
     },
     {
       "type": "checkbox",
