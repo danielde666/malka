@@ -17,7 +17,7 @@
         "announcement_BxgCk9": {
           "type": "_announcement",
           "settings": {
-            "text": "The Court is Open. Use Code OPENCOURT25 for 25% off Sitewide.",
+            "text": "The Court is Open. Use Code OPENCOURT25 for 25% off Sitewide. Discount auto applied in cart.",
             "link": "",
             "font": "var(--font-body--family)",
             "font_size": "0.625rem",
