@@ -134,8 +134,8 @@
               "type": "button",
               "name": "t:names.button",
               "settings": {
-                "label": "shop terra wristlet",
-                "link": "shopify://products/terra-wristlet",
+                "label": "shop wristlets",
+                "link": "shopify://collections/wristlet",
                 "open_in_new_tab": false,
                 "style_class": "button",
                 "width": "custom",
@@ -149,8 +149,8 @@
               "type": "button",
               "name": "t:names.button",
               "settings": {
-                "label": "shop olive wristlet",
-                "link": "shopify://products/olive-wristlet",
+                "label": "shop crossbodies",
+                "link": "shopify://collections/crossbody",
                 "open_in_new_tab": false,
                 "style_class": "button",
                 "width": "custom",
