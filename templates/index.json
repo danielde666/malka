@@ -16,7 +16,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<p>back in stock</p>",
+            "text": "<p>25% off sitewide</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -42,7 +42,7 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<h4>olive & terra wristlets</h4>",
+            "text": "<h4>the court is open</h4>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -68,7 +68,7 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<p>get our best selling wristlet now before it's gone, again.</p>",
+            "text": "<p>with code OPENCOURT25</p>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
