@@ -379,7 +379,7 @@
                 "stacking": false,
                 "show_pickup_availability": false,
                 "gift_card_form": false,
-                "sticky_mobile": true,
+                "sticky_mobile": false,
                 "sticky_desktop": false,
                 "sticky_offset": 40,
                 "padding-block-start": 43,
@@ -405,7 +405,6 @@
                 },
                 "accelerated-checkout": {
                   "type": "accelerated-checkout",
-                  "disabled": true,
                   "static": true,
                   "settings": {},
                   "blocks": {}
