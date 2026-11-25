@@ -1019,6 +1019,7 @@
         "group_iitVB8",
         "image_kgbp6y"
       ],
+      "disabled": true,
       "name": "t:names.image_with_text",
       "settings": {
         "content_direction": "row",
@@ -1045,7 +1046,7 @@
         "overlay_style": "solid",
         "gradient_direction": "to top",
         "padding-block-start": 40,
-        "padding-block-end": 0
+        "padding-block-end": 40
       }
     },
     "section_nHAaD4": {
@@ -1160,7 +1161,6 @@
         "image_afapjb",
         "group_YarBVt"
       ],
-      "disabled": true,
       "name": "t:names.image_with_text",
       "settings": {
         "content_direction": "row",
