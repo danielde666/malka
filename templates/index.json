@@ -2133,7 +2133,6 @@
           ]
         }
       },
-      "disabled": true,
       "name": "t:names.editorial",
       "settings": {
         "media_position": "left",
@@ -2290,7 +2289,6 @@
           ]
         }
       },
-      "disabled": true,
       "name": "t:names.editorial",
       "settings": {
         "media_position": "right",
@@ -2447,7 +2445,6 @@
           ]
         }
       },
-      "disabled": true,
       "name": "t:names.editorial",
       "settings": {
         "media_position": "left",
